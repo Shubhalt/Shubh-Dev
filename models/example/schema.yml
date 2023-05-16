@@ -9,7 +9,6 @@ models:
             description: "The primary key for this table"
             tests:
                 - unique
-                - not_null
 
     - name: my_second_dbt_model
       description: "A starter dbt model"
@@ -19,3 +18,25 @@ models:
             tests:
                 - unique
                 - not_null
+
+    - name: demo_table
+      description: "A starter dbt model"
+      columns:
+          - name: id
+            description: "The primary key for this table"
+            tests:
+                - unique
+                - not_null
+
+    - name: demo_table_rel
+      description: "A starter dbt model"
+      columns:
+          - name: id
+            description: "The primary key for this table"
+            tests:
+                - unique
+                - not_null
+                - relationships:
+                    to: ref('demo_table')
+                    field: id
+                
