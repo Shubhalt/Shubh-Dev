@@ -1,3 +1,17 @@
-insert into customer(cust_id, cust_name,service,date) values('1','Shu','IT',current_date);
+{{
+    config(
+        materialized='incremental',
+        partition_by={
+            "field":"date"}
+    )
+}}
 
-update customer set cust_name='Shubh' where cust_id='1';
+SELECT
+    '1' as cust_id,
+    'Shubh' as cust_name,
+    'IT' as service,
+    current_date as date
+FROM
+    customer
+WHERE
+    date > (SELECT MAX(date) FROM {{ customer }})
