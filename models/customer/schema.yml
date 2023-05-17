@@ -1,0 +1,25 @@
+
+version: 2
+
+models:
+    - name: customer
+      description: "Customer Table"
+      columns:
+          - name: cust_id
+            description: "The primary key for this table"
+            tests:
+                - unique
+                - not_null
+
+    - name: orders
+      description: "Order table"
+      columns:
+          - name: order_id
+            description: "The primary key for this table"
+            tests:
+                - unique
+                - not_null
+                - relationships:
+                    to: ref('customer')
+                    field: cust_id
+                
