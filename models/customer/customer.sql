@@ -1,6 +1,6 @@
 {{
     config(
-        materialized='incremental',
+        materialized='table',
         partition_by={
             "field":"date"}
     )
@@ -10,6 +10,4 @@ SELECT
     cust_id,
     cust_name,
     service,
-    date from fdic_banks.customer
-WHERE
-    date > (SELECT MAX(date) FROM {{ fdic_banks.customer }})
+    date as date from {{ source('fdic_banks', 'customer') }}
