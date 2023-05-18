@@ -12,5 +12,5 @@ SELECT
     cust_name,
     service,
     created_at as created_dt from {{ source('fdic_banks', 'customer') }}
-    WHERE
-    created_at > ( SELECT MAX(created_dt) FROM {{ this }} )
+    --WHERE
+    --created_at > ( SELECT MAX(created_dt) FROM {{ this }} )
