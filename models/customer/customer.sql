@@ -7,11 +7,9 @@
 }}
 
 SELECT
-    '1' as cust_id,
-    'Shubh' as cust_name,
-    'IT' as service,
-    current_date as date
-FROM
-    customer
+    cust_id,
+    cust_name,
+    service,
+    date from fdic_banks.customer
 WHERE
-    date > (SELECT MAX(date) FROM {{ customer }})
+    date > (SELECT MAX(date) FROM {{ fdic_banks.customer }})
