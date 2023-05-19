@@ -15,3 +15,8 @@ CASE
     ELSE 'Chip' end as order_name, 
 current_date as order_date
 from Shubh_Test.customer
+WHERE 
+    -- For the initial run
+    (dbt.is_incremental() = false) OR
+    -- For subsequent runs
+    (dbt.is_incremental() = true AND order_date > (SELECT MAX(order_date) FROM {{ this }}))
