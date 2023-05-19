@@ -16,7 +16,7 @@ CASE
 current_date as order_date
 from Shubh_Test.customer
 WHERE 
-    -- For the initial run
-    (dbt.is_incremental() = false) OR
-    -- For subsequent runs
-    (dbt.is_incremental() = true AND order_date > (SELECT MAX(order_date) FROM {{ this }}))
+{% if is_incremental() %}
+-- this filter will only be applied on an incremental run
+where order_date > (SELECT MAX(order_date) FROM {{ this }})
+{% endif %} 

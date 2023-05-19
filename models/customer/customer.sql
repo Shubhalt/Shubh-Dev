@@ -13,7 +13,7 @@ SELECT
     service,
     created_at as created_dt from {{ source('fdic_banks', 'customer') }}
     WHERE 
-    -- For the initial run
-    (dbt.is_incremental() = false) OR
-    -- For subsequent runs
-    (dbt.is_incremental() = true AND created_at > (SELECT MAX(created_dt) FROM {{ this }}))
+    {% if is_incremental() %}
+    -- this filter will only be applied on an incremental run
+    where created_dt >= (select max(created_dt) from {{ this }})
+    {% endif %}
