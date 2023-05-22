@@ -17,5 +17,5 @@ current_date as order_date
 from {{ source('Shubh_Test', 'customer') }}
 {% if is_incremental() %}
   -- this filter will only be applied on an incremental run
-  where order_date > (SELECT MAX(order_date) FROM {{ this }})
+  where cust_id not in (SELECT customer_id FROM {{ this }})
 {% endif %} 
