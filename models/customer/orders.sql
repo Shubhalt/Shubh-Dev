@@ -1,7 +1,7 @@
 {{
     config(
         materialized='incremental',
-        unique='dbt_utils.surrogate_key(order_id, customer_id)',
+        unique='order_id',
         partition_by={
             "field":"order_date"}
     )
@@ -14,11 +14,8 @@ CASE
     WHEN rand() < 2.0/3 THEN 'Card'
     ELSE 'Chip' end as order_name, 
 current_date as order_date
-from Shubh_Test.customer
-
+from {{ source('Shubh_Test', 'customer') }}
 {% if is_incremental() %}
-
   -- this filter will only be applied on an incremental run
   where order_date > (SELECT MAX(order_date) FROM {{ this }})
-
 {% endif %} 
