@@ -5,3 +5,7 @@ sources:
   - name: fdic_banks
     tables:
       - name: customer
+
+  - name: Shubh_Test
+    tables:
+      - name: customer
