@@ -7,7 +7,7 @@
     )
 }}
 
-select ROW_NUMBER() OVER (ORDER BY cust_id) + 1000 as order_id, 
+select COUNT(*) OVER (ORDER BY cust_id) + 1000 as order_id, 
 cust_id as customer_id,
 CASE
     WHEN rand() < 1.0/3 THEN 'Laptop'
